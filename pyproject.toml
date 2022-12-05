@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling","hatch-fancy-pypi-readme"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-hatch-template"
+description = 'Python prjoect template using hatch management tool'
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "DinGo4Dev", email = "lawkalaung@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",  
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/DinGo4DEV/python-hatch-template#readme"
+Issues = "https://github.com/DinGo4DEV/python-hatch-template/issues"
+Source = "https://github.com/DinGo4DEV/python-hatch-template"
+
+[tool.hatch.version]
+path = "python_hatch_template/__about__.py"
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+[tool.hatch.envs.default.scripts]
+cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=python_hatch_template --cov=tests {args}"
+no-cov = "cov --no-cov {args}"
+
+[dirs.env]
+virtual = ".hatch"
+
+[[tool.hatch.envs.test.matrix]]
+python = ["310", "311"]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = [
+  "python_hatch_template/__about__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.hatch.envs.docs]
+dependencies = [
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocstrings[python]"
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "mkdocs build --clean"
+serve = "mkdocs serve --dev-addr localhost:8000"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/python_hatch_template",
+]
+exclude = [
+  "/.github",
+  "/docs",
+]
+

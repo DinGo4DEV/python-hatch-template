@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling","hatch-fancy-pypi-readme"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
@@ -31,20 +31,33 @@ Source = "https://github.com/DinGo4DEV/python-hatch-template"
 [tool.hatch.version]
 path = "python_hatch_template/__about__.py"
 
-[tool.hatch.metadata.hooks.fancy-pypi-readme]
-content-type = "text/markdown"
+[terminal.styles]
+spinner = "material"
+
+[dirs.env]
+virtual = ".hatch"
 
 [tool.hatch.envs.default]
 dependencies = [
   "pytest",
   "pytest-cov",
 ]
+
+[tool.hatch.envs.default.env-vars]
+HATCH_BUILD_CLEAN = "true"
+
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=python_hatch_template --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 
-[dirs.env]
-virtual = ".hatch"
+
+[tool.hatch.envs.test]
+dependencies = [
+  "coverage[toml]",
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+]
 
 [[tool.hatch.envs.test.matrix]]
 python = ["310", "311"]
@@ -83,3 +96,9 @@ exclude = [
   "/docs",
 ]
 
+[tool.hatch.build]
+artifacts = [
+  "*.so",
+  "*.dll",
+  "!/foo/*.so",
+]

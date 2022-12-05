@@ -1,0 +1,18 @@
+site_name: Python Hatch Template
+# theme: readthedocs
+theme: 
+  name: "material"
+  custom_dir: docs/
+
+nav:
+  - index.md
+plugins:
+  - search
+  - autorefs 
+  - section-index
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
